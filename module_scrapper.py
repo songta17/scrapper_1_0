@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+from module_img import saving_book_illustration
 
 HOST = "https://books.toscrape.com/"
 
@@ -69,6 +70,9 @@ def extract_product(url):
     image_url = HOST + img_link[6:len(img_link)]
     product_data.append(image_url)
 
+    # Saving the picture of the book
+    saving_book_illustration(image_url)
+
     return product_data
 
 
@@ -126,7 +130,7 @@ def extract_categories():
     # Extract all categories
     items = soup.select("aside > div > ul > li > ul > li > a")
     for x in items:
-        item_url = x.attrs['href'].split('/')
+        item_url = x.attrs['href'].split("/")
         categories.append(item_url[-2])
 
     return categories
