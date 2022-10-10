@@ -1,6 +1,6 @@
 import csv
 
-HEADERS = [
+PRODUCT_PAGE_HEADERS = [
   "product_page_url", 
   "universal_product_code", 
   "title", 
@@ -12,9 +12,15 @@ HEADERS = [
   "review_rating", 
   "image_url"]
 
-# Create a CSV file and insert data inside
-def create_csv(line):
-  with open('data_books.csv', 'w') as fichier_csv:
-    writer = csv.writer(fichier_csv, delimiter=',')
-    writer.writerow(HEADERS)
-    writer.writerow(line)
+
+def create_csv(data):
+    """Generate the CSV containing data extracted on the product page.
+
+    Args:
+      data (list): It contains all data of a product
+    """
+    # Create/open a csv to insert headers and data
+    with open('data_books.csv', 'w') as fichier_csv:
+        writer = csv.writer(fichier_csv, delimiter=',')
+        writer.writerow(PRODUCT_PAGE_HEADERS)
+        writer.writerow(data)
