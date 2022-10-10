@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 
 HOST = "http://books.toscrape.com/"
+
+
 def extract_product_data(url):
     """Extract data from product page
     Get the source code of the url product page and
@@ -71,7 +73,7 @@ def extract_product_data(url):
 
 
 def extract_categories_data(url):
-    """_summary_
+    """Extract all products datas from a category.
 
     Args:
         url (string): Contains the url of the category
