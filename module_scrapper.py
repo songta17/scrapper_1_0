@@ -1,10 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
 
-HOST = "http://books.toscrape.com/"
+HOST = "https://books.toscrape.com/"
 
 
-def extract_product_data(url):
+def extract_product(url):
     """Extract data from product page
     Get the source code of the url product page and
     extract product data with Soup.
@@ -72,7 +72,7 @@ def extract_product_data(url):
     return product_data
 
 
-def extract_categories_data(url):
+def extract_products(category):
     """Extract all products datas from a category.
 
     Args:
@@ -82,14 +82,19 @@ def extract_categories_data(url):
         list: Returns a list containing the urls of all products of the category
     """
     # Generate the page of the category with the url
-    page = requests.get(HOST + url)
+    url = HOST + "catalogue/category/books/" + category + "/index.html"
+    page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
-
-    # Extract the number of page for this category
-    pagination = int(soup.find(class_="current").string.strip()[-1])
 
     # Create a list of products urls of the category
     products_data = []
+
+    multiple_page = soup.find(class_="current")
+    if multiple_page is None:
+        pagination = 1
+    else:
+        # Extract the number of page for this category
+        pagination = int(soup.find(class_="current").string.strip()[-1])
 
     # Iterate through all pages
     for number in range(pagination):
@@ -103,3 +108,25 @@ def extract_categories_data(url):
             products_data.append(product_url)
 
     return products_data
+
+
+def extract_categories():
+    """Extract all categories of books
+
+    Returns:
+        list: a list of all categories
+    """
+    # Generate the page of the category with the url
+    page = requests.get(HOST)
+    soup = BeautifulSoup(page.content, "html.parser")
+
+    # Create a list of categories
+    categories = []
+
+    # Extract all categories
+    items = soup.select("aside > div > ul > li > ul > li > a")
+    for x in items:
+        item_url = x.attrs['href'].split('/')
+        categories.append(item_url[-2])
+
+    return categories
