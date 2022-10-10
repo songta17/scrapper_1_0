@@ -73,7 +73,7 @@ def extract_product_data(url):
 
 
 def extract_categories_data(url):
-    """_summary_
+    """Extract all products datas from a category.
 
     Args:
         url (string): Contains the url of the category

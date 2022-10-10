@@ -13,7 +13,7 @@ PRODUCT_PAGE_HEADERS = [
   "image_url"]
 
 
-def create_csv(data):
+def create_csv():
     """Generate the CSV containing data extracted on the product page.
 
     Args:
@@ -23,11 +23,10 @@ def create_csv(data):
     with open('data_books.csv', 'w') as fichier_csv:
         writer = csv.writer(fichier_csv, delimiter=',')
         writer.writerow(PRODUCT_PAGE_HEADERS)
-        writer.writerow(data)
 
 
 def add_csv(data):
-    """Add datas extracted in an existing csv.
+    """Add datas extracted in the existing csv.
 
     Args:
       data (list): It contains all data of a product
