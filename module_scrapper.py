@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 
-
-def extract_product_data(host, url):
+HOST = "http://books.toscrape.com/"
+def extract_product_data(url):
     """Extract data from product page
     Get the source code of the url product page and
     extract product data with Soup.
@@ -16,14 +16,14 @@ def extract_product_data(host, url):
     """
 
     # Generate the page with the url
-    page = requests.get(host + url)
+    page = requests.get(HOST + url)
     soup = BeautifulSoup(page.content, "html.parser")
 
     # Create an empty product data list
     product_data = []
 
     # Concatenate and add the product_page_url to the product data list
-    product_data.append(host + url)
+    product_data.append(HOST + url)
 
     # Parse the data from Production Information section
     product_information = soup.find_all("td")
@@ -64,7 +64,40 @@ def extract_product_data(host, url):
 
     # Extract, generate and add the image_url
     img_link = soup.find("img").attrs['src']
-    image_url = host + img_link[6:len(img_link)]
+    image_url = HOST + img_link[6:len(img_link)]
     product_data.append(image_url)
 
     return product_data
+
+
+def extract_categories_data(url):
+    """_summary_
+
+    Args:
+        url (string): Contains the url of the category
+
+    Returns:
+        list: Returns a list containing the urls of all products of the category
+    """
+    # Generate the page of the category with the url
+    page = requests.get(HOST + url)
+    soup = BeautifulSoup(page.content, "html.parser")
+
+    # Extract the number of page for this category
+    pagination = int(soup.find(class_="current").string.strip()[-1])
+
+    # Create a list of products urls of the category
+    products_data = []
+
+    # Iterate through all pages
+    for number in range(pagination):
+        # Extract urls
+        urls_category = soup.select("article > h3 > a")
+
+        # print(urls_category)
+        for item in urls_category:
+            item_url = item.attrs['href']
+            product_url = "catalogue" + item_url[8:len(item_url)]
+            products_data.append(product_url)
+
+    return products_data

@@ -24,3 +24,9 @@ def create_csv(data):
         writer = csv.writer(fichier_csv, delimiter=',')
         writer.writerow(PRODUCT_PAGE_HEADERS)
         writer.writerow(data)
+
+
+def add_csv(data):
+    with open('data_books.csv', 'a') as fichier_csv:
+        writer = csv.writer(fichier_csv, delimiter=',')
+        writer.writerow(data)
