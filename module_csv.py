@@ -20,7 +20,7 @@ def create_csv(name):
       data (list): It contains all data of a product
     """
     # Create/open a csv to insert headers and data
-    with open("csv/" + name + ".csv", "w") as fichier_csv:
+    with open("lib/csv/" + name + ".csv", "w") as fichier_csv:
         writer = csv.writer(fichier_csv, delimiter=",")
         writer.writerow(PRODUCT_PAGE_HEADERS)
 
@@ -31,6 +31,6 @@ def add_csv(data, name):
     Args:
       data (list): It contains all data of a product
     """
-    with open("csv/" + name + ".csv", "a") as fichier_csv:
+    with open("lib/csv/" + name + ".csv", "a") as fichier_csv:
         writer = csv.writer(fichier_csv, delimiter=",")
         writer.writerow(data)

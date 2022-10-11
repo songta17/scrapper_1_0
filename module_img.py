@@ -10,5 +10,5 @@ def saving_book_illustration(url):
     response = requests.get(url)
     picture = url.split("/")
 
-    with open("img/" + picture[-1], "wb") as fichier_csv:
+    with open("lib/img/" + picture[-1], "wb") as fichier_csv:
         fichier_csv.write(response.content)
