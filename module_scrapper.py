@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-from module_img import saving_book_illustration
+# from module_img import saving_book_illustration
 
 HOST = "https://books.toscrape.com/"
 
@@ -70,8 +70,8 @@ def extract_product(url):
     image_url = HOST + img_link[6:len(img_link)]
     product_data.append(image_url)
 
-    # Saving the picture of the book
-    saving_book_illustration(image_url)
+    # # Saving the picture of the book
+    # saving_book_illustration(image_url)
 
     return product_data
 
