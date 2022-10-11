@@ -1,5 +1,6 @@
 import csv
 
+
 PRODUCT_PAGE_HEADERS = [
   "product_page_url", 
   "universal_product_code", 
@@ -18,7 +19,10 @@ def create_csv(name):
 
     Args:
       data (list): It contains all data of a product
-    """
+    """ 
+    # Path
+    # path = os.path.join(parent_dir, directory)
+
     # Create/open a csv to insert headers and data
     with open("lib/csv/" + name + ".csv", "w") as fichier_csv:
         writer = csv.writer(fichier_csv, delimiter=",")

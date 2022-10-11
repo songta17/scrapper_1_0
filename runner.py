@@ -1,6 +1,8 @@
 from module_csv import create_csv, add_csv
 from module_scrapper import extract_product, extract_products, extract_categories
 from module_img import saving_book_illustration
+from module_folder import generate_folder
+
 
 class Run:
     """Running the application to extract all products details from all categories books
@@ -10,6 +12,9 @@ class Run:
     def runner():
         """Run the script to begin the scrapping
         """
+        # generate folder for img and csv
+        generate_folder()
+
         print("Data categories Start!")
         categories = extract_categories()
 
