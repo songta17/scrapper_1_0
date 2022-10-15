@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-# from module_img import saving_book_illustration
 
 HOST = "https://books.toscrape.com/"
 
@@ -72,7 +71,7 @@ def extract_product_datas(url):
     return product_datas
 
 
-def get_link_products(name_category):
+def extract_link_products(name_category):
     """Extract all link of products from a category.
 
     Args:

@@ -1,7 +1,8 @@
 from module_csv import create_csv, add_csv
-from module_scrapper import extract_product_datas, get_link_products, extract_name_categories
+from module_scrapper import extract_product_datas, extract_link_products, extract_name_categories
 from module_img import saving_book_illustration
 from module_folder import generate_folder
+from module_benchmark import start_time, end_time
 
 
 class Run:
@@ -12,6 +13,7 @@ class Run:
     def launch_scrapper():
         """Run the script to begin the scrapping
         """
+        start = start_time()
         # generate folder for img and csv
         generate_folder()
 
@@ -20,7 +22,7 @@ class Run:
         for name_category in name_categories:
             # generate the category csv
             create_csv(name_category)
-            products_links = get_link_products(name_category)
+            products_links = extract_link_products(name_category)
             for product_link in products_links:
                 # extract data from a product link
                 product_datas = extract_product_datas(product_link)
@@ -30,3 +32,5 @@ class Run:
                 saving_book_illustration(product_datas[-1])
 
         print("All products of each gategories extracted!")
+        end_time(start)
+          
