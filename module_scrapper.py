@@ -5,13 +5,12 @@ import requests
 HOST = "https://books.toscrape.com/"
 
 
-def extract_product(url):
-    """Extract data from product page
+def extract_product_datas(url):
+    """Extract datas from product page
     Get the source code of the url product page and
     extract product data with Soup.
 
     Args:
-        host (string): url protocol with the url domain
         url (string): url path
 
     Returns:
@@ -23,75 +22,72 @@ def extract_product(url):
     soup = BeautifulSoup(page.content, "html.parser")
 
     # Create an empty product data list
-    product_data = []
+    product_datas = []
 
     # Concatenate and add the product_page_url to the product data list
-    product_data.append(HOST + url)
+    product_datas.append(HOST + url)
 
     # Parse the data from Production Information section
     product_information = soup.find_all("td")
 
     # Add the universal_product_code to the product data list
-    product_data.append(product_information[0].string)
+    product_datas.append(product_information[0].string)
 
     # Add the title of the product
-    product_data.append(soup.find("h1").string)
+    product_datas.append(soup.find("h1").string)
 
     # Add the price_including_tax
-    product_data.append(product_information[3].string)
+    product_datas.append(product_information[3].string)
 
     # Add the price_excluding_tax
-    product_data.append(product_information[2].string)
+    product_datas.append(product_information[2].string)
 
     # Add the number_available
-    product_data.append(product_information[5].string)
+    product_datas.append(product_information[5].string)
 
     # Add the product_description
-    product_data.append([soup.select("article > p")[0].string])
+    product_datas.append(soup.select("article > p")[0].string)
 
     # Add the category
-    product_data.append(product_information[1].string)
+    product_datas.append(product_information[1].string)
 
     # Extract and add the review_rating (number of star of the product)
     review_first_element = soup.find(class_="star-rating").attrs["class"]
     if "Five" in review_first_element:
-        product_data.append(5)
+        product_datas.append(5)
     elif "Four" in review_first_element:
-        product_data.append(4)
+        product_datas.append(4)
     elif "Three" in review_first_element:
-        product_data.append(3)
+        product_datas.append(3)
     elif "Two" in review_first_element:
-        product_data.append(2)
+        product_datas.append(2)
     else:
-        product_data.append(1)
+        product_datas.append(1)
 
     # Extract, generate and add the image_url
     img_link = soup.find("img").attrs['src']
     image_url = HOST + img_link[6:len(img_link)]
-    product_data.append(image_url)
+    product_datas.append(image_url)
 
-    # # Saving the picture of the book
-    # saving_book_illustration(image_url)
-
-    return product_data
+    return product_datas
 
 
-def extract_products(category):
-    """Extract all products datas from a category.
+def get_link_products(name_category):
+    """Extract all link of products from a category.
 
     Args:
-        url (string): Contains the url of the category
+        name_category (string): Contains the name of the category
 
     Returns:
-        list: Returns a list containing the urls of all products of the category
+        list: Returns a list containing the urls of all products of a category
     """
     # Generate the page of the category with the url
-    url = HOST + "catalogue/category/books/" + category + "/index.html"
+    url = HOST + "catalogue/category/books/" + name_category + "/index.html"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
 
     # Create a list of products urls of the category
-    products_data = []
+    products_urls = []
 
     multiple_page = soup.find(class_="current")
     if multiple_page is None:
@@ -109,28 +105,28 @@ def extract_products(category):
         for item in urls_category:
             item_url = item.attrs['href']
             product_url = "catalogue" + item_url[8:len(item_url)]
-            products_data.append(product_url)
+            products_urls.append(product_url)
 
-    return products_data
+    return products_urls
 
 
-def extract_categories():
-    """Extract all categories of books
+def extract_name_categories():
+    """Extract all name categories of books
 
     Returns:
-        list: a list of all categories
+        list: a list of all categories name
     """
     # Generate the page of the category with the url
     page = requests.get(HOST)
     soup = BeautifulSoup(page.content, "html.parser")
 
     # Create a list of categories
-    categories = []
+    name_categories = []
 
     # Extract all categories
     items = soup.select("aside > div > ul > li > ul > li > a")
     for x in items:
         item_url = x.attrs['href'].split("/")
-        categories.append(item_url[-2])
+        name_categories.append(item_url[-2])
 
-    return categories
+    return name_categories

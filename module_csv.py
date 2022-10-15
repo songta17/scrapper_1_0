@@ -14,27 +14,29 @@ PRODUCT_PAGE_HEADERS = [
   "image_url"]
 
 
-def create_csv(name):
+def create_csv(name_category):
     """Generate the CSV containing data extracted on the product page.
 
     Args:
-      data (list): It contains all data of a product
+      name_category (string): It contains all data of a product
     """ 
     # Path
     # path = os.path.join(parent_dir, directory)
 
     # Create/open a csv to insert headers and data
-    with open("lib/csv/" + name + ".csv", "w") as fichier_csv:
+    with open("lib/csv/" + name_category + ".csv", "w") as fichier_csv:
         writer = csv.writer(fichier_csv, delimiter=",")
         writer.writerow(PRODUCT_PAGE_HEADERS)
+    print(name_category + ".csv created!")
 
 
-def add_csv(data, name):
+def add_csv(product_datas, name_category):
     """Add datas extracted in the existing csv.
 
     Args:
-      data (list): It contains all data of a product
+      product_datas (list): It contains a list of all data of a product
     """
-    with open("lib/csv/" + name + ".csv", "a") as fichier_csv:
+    print(type(product_datas))
+    with open("lib/csv/" + name_category + ".csv", "a") as fichier_csv:
         writer = csv.writer(fichier_csv, delimiter=",")
-        writer.writerow(data)
+        writer.writerow(product_datas)
