@@ -1,4 +1,4 @@
 from runner import *
 
 # Run the application
-Run.runner()
+Run.launch_scrapper()
