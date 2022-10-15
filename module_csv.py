@@ -36,7 +36,6 @@ def add_csv(product_datas, name_category):
     Args:
       product_datas (list): It contains a list of all data of a product
     """
-    print(type(product_datas))
     with open("lib/csv/" + name_category + ".csv", "a") as fichier_csv:
         writer = csv.writer(fichier_csv, delimiter=",")
         writer.writerow(product_datas)
