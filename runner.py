@@ -18,6 +18,7 @@ class Run:
         generate_folder()
 
         name_categories = extract_name_categories()
+        counter = 0
         
         for name_category in name_categories:
             # generate the category csv
@@ -29,7 +30,8 @@ class Run:
                 # add the data informations about a product
                 add_csv(product_datas, name_category)
                 # saving the picture
-                saving_book_illustration(product_datas[-1])
+                saving_book_illustration(product_datas[-1], counter, product_datas[2])
+                counter += 1
 
         print("All products of each gategories extracted!")
         end_time(start)
